@@ -65,16 +65,35 @@ class lista{
         this.tamanho--
     }
     
+    public __total__(){
+        let prox=this.cabeça
+        let retorno:any=[]
+        while(prox!=null){
+            retorno.push(prox.valor)
+            prox=prox.proximo
+        }
+        return retorno
+    }
+
     public __len__(){
         return this.tamanho
     }
 
+    public enumerate(){
+        let prox=this.cabeça
+        let x=0
+        while(prox!=null){
+            console.log(String(x)+':',prox.valor)
+            prox=prox.proximo
+            x++
+        }
+    }
 }
 
-var lista1 = new lista();
-lista1.add(2, 3);
-lista1.add(1, 0);
-lista1.add(20, 1);
+var lista1 = new lista()
+lista1.add(2, 3)
+lista1.add(1, 0)
+lista1.add(20, 1)
 console.log(lista1)
 console.log(lista1.index(1))
 lista1.remove(1)
@@ -82,3 +101,6 @@ console.log(lista1)
 lista1.modify(20,1)
 console.log(lista1.index(1))
 console.log(lista1)
+console.log(lista1.__total__())
+lista1.enumerate()
+console.log(lista1.__len__())

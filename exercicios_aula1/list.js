@@ -57,8 +57,26 @@ var lista = /** @class */ (function () {
         prox.cadeia(prox.proximo.proximo);
         this.tamanho--;
     };
+    lista.prototype.__total__ = function () {
+        var prox = this.cabeça;
+        var retorno = [];
+        while (prox != null) {
+            retorno.push(prox.valor);
+            prox = prox.proximo;
+        }
+        return retorno;
+    };
     lista.prototype.__len__ = function () {
         return this.tamanho;
+    };
+    lista.prototype.enumerate = function () {
+        var prox = this.cabeça;
+        var x = 0;
+        while (prox != null) {
+            console.log(String(x) + ':', prox.valor);
+            prox = prox.proximo;
+            x++;
+        }
     };
     return lista;
 }());
@@ -73,3 +91,6 @@ console.log(lista1);
 lista1.modify(20, 1);
 console.log(lista1.index(1));
 console.log(lista1);
+console.log(lista1.__total__());
+lista1.enumerate();
+console.log(lista1.__len__());
