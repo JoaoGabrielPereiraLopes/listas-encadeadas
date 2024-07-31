@@ -1,5 +1,6 @@
 var no = /** @class */ (function () {
     function no(valor, proximo) {
+        if (valor === void 0) { valor = null; }
         if (proximo === void 0) { proximo = null; }
         this.valor = valor;
         this.proximo = proximo;
@@ -66,6 +67,15 @@ var lista = /** @class */ (function () {
         }
         return retorno;
     };
+    lista.prototype.to_string = function () {
+        var prox = this.cabeça;
+        var retorno = '';
+        while (prox != null) {
+            retorno += String(prox.valor);
+            prox = prox.proximo;
+        }
+        return retorno;
+    };
     lista.prototype.__len__ = function () {
         return this.tamanho;
     };
@@ -78,12 +88,58 @@ var lista = /** @class */ (function () {
             x++;
         }
     };
+    lista.prototype.split = function (a) {
+        var prox = this.cabeça;
+        var retorno = [];
+        var listinha = [];
+        while (prox != null) {
+            if (prox.valor != a) {
+                listinha.push(prox.valor);
+            }
+            else {
+                retorno.push(listinha);
+                listinha = [];
+            }
+            prox = prox.proximo;
+        }
+        retorno.push(listinha);
+        return retorno;
+    };
+    lista.prototype.ultra_split = function (a) {
+        var prox = this.cabeça;
+        var retorno = [];
+        var fluxo_inicial = new no();
+        var fluxo = fluxo_inicial;
+        while (prox != null) {
+            if (prox.valor != a) {
+                if (fluxo.valor == null) {
+                    fluxo.valor = prox.valor;
+                    if (prox.proximo.valor != a) {
+                        fluxo.proximo = prox.proximo;
+                    }
+                }
+                else {
+                    fluxo.valor = prox.valor;
+                }
+            }
+            else {
+                retorno.push(fluxo_inicial);
+                fluxo_inicial = new no();
+                fluxo = fluxo_inicial;
+            }
+            prox = prox.proximo;
+        }
+        return retorno;
+    };
     return lista;
 }());
 var lista1 = new lista();
 lista1.add(2, 3);
 lista1.add(1, 0);
 lista1.add(20, 1);
+lista1.add(2, 1);
+console.log(lista1.ultra_split(2));
+lista1.add(1, 1);
 console.log(lista1);
 console.log(lista1.index(1));
 lista1.remove(1);

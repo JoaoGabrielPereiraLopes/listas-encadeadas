@@ -1,7 +1,7 @@
 class no {
     public valor:any
     public proximo:any
-    public constructor(valor,proximo=null) {
+    public constructor(valor=null,proximo=null) {
         this.valor=valor
         this.proximo=proximo
     }
@@ -75,6 +75,16 @@ class lista{
         return retorno
     }
 
+    public to_string(){
+        let prox=this.cabeça
+        let retorno:string=''
+        while(prox!=null){
+            retorno+=String(prox.valor)
+            prox=prox.proximo
+        }
+        return retorno
+    }
+
     public __len__(){
         return this.tamanho
     }
@@ -88,12 +98,43 @@ class lista{
             x++
         }
     }
+
+    public split(a:any){
+        let prox=this.cabeça
+        let retorno:any=[]
+        let fluxo_inicial=new no()
+        let fluxo=fluxo_inicial
+        while(prox!=null){
+            if(prox.valor!=a){
+                if(fluxo.valor==null){
+                    fluxo.valor=prox.valor
+                    if(prox.proximo.valor!=a){
+                        fluxo.proximo=prox.proximo
+                    }
+                }
+                else{
+                    fluxo.valor=prox.valor
+                }
+            }
+            else{
+                retorno.push(fluxo_inicial)
+                fluxo_inicial=new no()
+                fluxo=fluxo_inicial
+            }
+            prox=prox.proximo
+        }
+        return retorno
+    }
 }
 
 var lista1 = new lista()
 lista1.add(2, 3)
 lista1.add(1, 0)
 lista1.add(20, 1)
+lista1.add(2, 1)
+console.log(lista1.split(2))
+lista1.add(1,1)
+console.log(lista1.split(2))
 console.log(lista1)
 console.log(lista1.index(1))
 lista1.remove(1)
